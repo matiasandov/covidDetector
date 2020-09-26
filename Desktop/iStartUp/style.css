@@ -1,0 +1,133 @@
+body, html {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+nav{
+    /*aqui le mueves para sber que tan alta hacer la barrita*/
+    height: 120px;
+    background-color: rgba(255,255,255,0.8);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgb(200,200,200);
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    
+}
+
+/* cambiar tamaño logo*/
+nav a img{
+    height: 20px;
+}
+nav input[type='search']{
+    margin-left: auto;
+    padding: 8px 16px;
+    background-color: rgb(240,240,245);
+    border: none;
+    border-radius: 16px;
+    font-size: 1.2rem;
+}
+
+/* seccion que contiene TODOS LOS ARTICULOS*/
+#container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 8px;
+
+}
+
+/* seccion del articulo dentro de cada contendor*/
+#container article{
+    max-width: 800px;
+    padding: 24px 8px;
+    overflow-x: hidden;
+    
+}
+
+/* texto dentro del articulo */
+#container article p{
+    overflow: auto;
+}
+
+/*este es para header de los arituclos dentro del articulo*/
+#container article .title span{
+    width: 100%;
+    font-size: 3rem !important;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 0.5px solid rgb(160,160,160);
+}
+#container article .subtitle span{
+    font-size: 1.4rem !important;
+    font-weight: 600;
+}
+
+/*Barrita de hasta abajo con el me gusta*/
+#container section.social{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 24px;
+    background-color:lightgray;
+}
+
+/*CADA CUADRITO DEL FEED*/
+.card{
+    height: 130px;
+    /*AMPLIA A LO ANCHO*/
+    max-width: 300px;
+    width: 100%;
+    /*separa entre un contenedor y otro*/
+    margin: 30px;
+    /*separa adentro del contendor und etermiando espacio*/
+    padding: 50px;
+    border: 2px solid rgb(200,200,200);
+    /*redondear borde*/
+    border-radius: 20px;
+    /*formato en el que se acomodaran los elemntos de adentro de los contenedores*/
+    display: block;
+    flex-direction: column;
+    justify-content: start;
+    text-decoration: none;
+    
+}
+.card .card_category{
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgb(100,100,100);
+}
+.card .card_title{
+    margin: 0;
+    font-size: 2rem;
+    color: black;
+}
+.card .card_author{
+    margin-top: auto;
+    color: rgb(160,160,160);
+}
+
+#barrita{
+    background-color: rgb(51, 204, 204);
+
+}
+
+#titulos{
+    color: aliceblue;
+    font-weight: 600;
+    font-size: 2rem;
+    /*ensanchar el contendor*/
+    text-decoration: none;
+    /*alinear texto*/
+    box-align: center;
+}
+
