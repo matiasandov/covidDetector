@@ -22,7 +22,9 @@ by_CO2 = co2.sort_values('value',ascending=False)
 #se guarda nada más la columna de year con valores iguales a 10 ya ordenados
 byCO2_2010 = by_CO2[by_CO2.year == 2010]
 
-print(byCO2_2010.head(10))
+print(byCO2_2010.head(5))
+
+
 
 
 
