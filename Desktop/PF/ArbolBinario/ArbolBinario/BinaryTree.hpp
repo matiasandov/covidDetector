@@ -12,12 +12,12 @@
 #include "TreeNode.hpp"
 #include <iostream>
 using namespace std;
-
+void clear(TreeNode<T> * );
 
 
 template <class T>
 class BinaryTree {
-private:
+protected:
     TreeNode<T> * root = nullptr;
     
 public:
@@ -30,8 +30,8 @@ public:
     
     bool empty() const;
     
-    /* Eliminar un nodo del árbol */
-    TreeNode<T> * remove(T &);
+    /* Eliminar un nodo del árbol: se pone en virtual para poder heredar */
+    virtual TreeNode<T> * remove(T &);
     
     /* Eliminar todos los nodos del árbol */
     void clear();

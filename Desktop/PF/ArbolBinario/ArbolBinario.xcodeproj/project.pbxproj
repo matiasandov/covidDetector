@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B25825AD2535DECB008B9C70 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25825AC2535DECB008B9C70 /* main.cpp */; };
 		B25825BB2535DF58008B9C70 /* TreeNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25825B92535DF58008B9C70 /* TreeNode.cpp */; };
-		B25825C02535E19D008B9C70 /* BinaryTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25825BE2535E19D008B9C70 /* BinaryTree.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,8 +28,8 @@
 		B25825AC2535DECB008B9C70 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		B25825B92535DF58008B9C70 /* TreeNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TreeNode.cpp; sourceTree = "<group>"; };
 		B25825BA2535DF58008B9C70 /* TreeNode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TreeNode.hpp; sourceTree = "<group>"; };
-		B25825BE2535E19D008B9C70 /* BinaryTree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BinaryTree.cpp; sourceTree = "<group>"; };
 		B25825BF2535E19D008B9C70 /* BinaryTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BinaryTree.hpp; sourceTree = "<group>"; };
+		B25825C5253F0B37008B9C70 /* BST.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BST.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +65,8 @@
 				B25825AC2535DECB008B9C70 /* main.cpp */,
 				B25825B92535DF58008B9C70 /* TreeNode.cpp */,
 				B25825BA2535DF58008B9C70 /* TreeNode.hpp */,
-				B25825BE2535E19D008B9C70 /* BinaryTree.cpp */,
 				B25825BF2535E19D008B9C70 /* BinaryTree.hpp */,
+				B25825C5253F0B37008B9C70 /* BST.hpp */,
 			);
 			path = ArbolBinario;
 			sourceTree = "<group>";
@@ -130,7 +129,6 @@
 			files = (
 				B25825AD2535DECB008B9C70 /* main.cpp in Sources */,
 				B25825BB2535DF58008B9C70 /* TreeNode.cpp in Sources */,
-				B25825C02535E19D008B9C70 /* BinaryTree.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
