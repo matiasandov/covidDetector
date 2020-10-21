@@ -2,16 +2,17 @@
 //  BST.hpp
 //  ArbolBinario
 //
-//  Created by Matías Méndez on 20/10/20.
+//  Created by Matías Méndez on 21/10/20.
 //
 
 #ifndef BST_hpp
 #define BST_hpp
-#include "BinaryTree.hpp"
 
 #include <stdio.h>
 #include <iostream>
 using namespace std;
+
+#include "BinaryTree.hpp"
 
 template <class T>
 class BST : public BinaryTree<T>
@@ -46,17 +47,22 @@ void BST<T>::visit(int opcion){
     else{
         switch (opcion) {
             case 1:
-                preOrden();
+                
+                BinaryTree<T>::preOrden();
                 break;
                 
             case 2:
-                inOrden();
+                BinaryTree<T>inOrden();
                 break;
                 
             case 3:
-                postOrden();
+                BinaryTree<T>postOrden();
                 break;
                 
+            case 4:
+                BinaryTree<T>printLevelOrder();
+                break;
+            
             default:
                 break;
         }

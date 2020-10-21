@@ -8,14 +8,15 @@
 #ifndef BinaryTree_hpp
 #define BinaryTree_hpp
 
+#include <stdio.h>
+#include <iostream>
+#include <queue>
+using namespace std;
 
 #include "TreeNode.hpp"
 
-#include <stdio.h>
-#include <iostream>
-using namespace std;
 
-void clear(TreeNode<T> * );
+
 
 
 template <class T>
@@ -39,6 +40,7 @@ public:
     
     /* Eliminar todos los nodos del árbol */
     void clear();
+    void clear(TreeNode<T> * );
     
     
     /* Recorridos de un árbol */
@@ -50,6 +52,9 @@ public:
     
     void postOrden() const;
     void postOrden(TreeNode<T> *) const;
+    
+    void printLevelOrder() const;
+    void printLevelOrder(TreeNode<T> *) const;
     
 };
 template <class T>
@@ -196,4 +201,52 @@ void BinaryTree<T>::postOrden(TreeNode<T> * node) const
         std::cout << *node << " ";
     }
 }
+
+template <class T>
+void  BinaryTree<T>::printLevelOrder() const {
+    this->printLevelOrder( this->root );
+}
+
+
+template <class T>
+void  BinaryTree<T>::printLevelOrder(TreeNode<T> *root) const {
+    // Base Case
+    if (root == NULL) return;
+  
+    // QUE PARA debe llevar apuntador por espacio de memoria dinamico
+    queue < TreeNode<T> *> q;
+  
+    // Enqueue Root and PARA  height
+    q.push(root);
+    
+  //mientras no este vacio
+    while (q.empty() == false)
+    {
+        
+        //contador de numero de nodos en el nivela actual
+        int nodeCount = q.size();
+  
+       
+        //ciclo dentro del nivel donde imprimirá cada nodo del nivel
+        while (nodeCount > 0)
+        {
+            TreeNode<T> *actualFrente = q.front();
+            //imprime el nodo al fronte
+            cout << actualFrente->getInfo() << " ";
+            //borra nodo al frente y pasará al siguiente en el nuevo ciclo
+            q.pop();
+            
+            //si hay uno a la izquierda lo agrega al Queue para imprimirlo
+            if (actualFrente->getLeft() != NULL)
+                q.push(actualFrente->getLeft() );
+            
+            //lo mismo con derecho
+            if (actualFrente->getRight() != NULL)
+                q.push(actualFrente->getRight() );
+            nodeCount--;
+        }
+        cout << endl;
+    }
+}
+
 #endif /* BinaryTree_hpp */
