@@ -35,8 +35,8 @@ public:
     
     bool empty() const;
     
-    /* Eliminar un nodo del árbol: se pone en virtual para poder heredar */
-    virtual TreeNode<T> * remove(T &);
+    /* Eliminar un nodo del árbol: se pone en virtual para poder heredar
+    virtual TreeNode<T> * remove(T &); */
     
     /* Eliminar todos los nodos del árbol */
     void clear();
@@ -53,8 +53,8 @@ public:
     void postOrden() const;
     void postOrden(TreeNode<T> *) const;
     
-    void printLevelOrder() const;
-    void printLevelOrder(TreeNode<T> *) const;
+    void levelByLevel() const;
+    void levelByLevel(TreeNode<T> *) const;
     
 };
 template <class T>
@@ -113,12 +113,12 @@ bool BinaryTree<T>::insert(TreeNode<T> * node, TreeNode<T> * parent)
     return inserted;
 }
 
-/* Eliminar un nodo del árbol */
+/* Eliminar un nodo del árbol
 template <class T>
 TreeNode<T> * BinaryTree<T>::remove(T &)
 {
     
-}
+}*/
 
 /* Eliminar todos los nodos del árbol */
 template <class T>
@@ -202,17 +202,18 @@ void BinaryTree<T>::postOrden(TreeNode<T> * node) const
     }
 }
 
+//complejidad lineal O(n)
 template <class T>
-void  BinaryTree<T>::printLevelOrder() const {
-    this->printLevelOrder( this->root );
+void  BinaryTree<T>::levelByLevel() const {
+    this->levelByLevel( this->root );
 }
 
-
+//complejidad lineal O(n)
 template <class T>
-void  BinaryTree<T>::printLevelOrder(TreeNode<T> *root) const {
+void  BinaryTree<T>::levelByLevel(TreeNode<T> *root) const {
     // Base Case
-    if (root == NULL) return;
-  
+        if (root == NULL) return ;
+    
     // QUE PARA debe llevar apuntador por espacio de memoria dinamico
     queue < TreeNode<T> *> q;
   
@@ -233,6 +234,7 @@ void  BinaryTree<T>::printLevelOrder(TreeNode<T> *root) const {
             TreeNode<T> *actualFrente = q.front();
             //imprime el nodo al fronte
             cout << actualFrente->getInfo() << " ";
+            
             //borra nodo al frente y pasará al siguiente en el nuevo ciclo
             q.pop();
             

@@ -25,26 +25,62 @@ public:
     
     //al hacer una busqueda se te regresará  un apuntador al objeto
     TreeNode<T> * search(const T &) const;
+    bool search(TreeNode<T> *);
+    
     bool insert(T &);
     bool insert(TreeNode<T> * );
     
     void visit(int);
     
+    int height(TreeNode<T> *);
+    int height();
     
-private:
-    /* Ocultar algunos métodos heredados */
-    //using BinaryTree<T>::insert;
+    //si se pone apuntador porque tiene que ir apuntando al de arriba
+    //complejidad 0(n)
+    void ancestors(TreeNode<T> *);
+    
+    int whatLevelamI(TreeNode<T> *);
+    
+
 };
 
-/*Complejidad: */
+//Complejidad logaritmica si el arbol esta balanceado y sino complejidad lineal
+template <class T>
+bool BST<T>::search(TreeNode<T> *buscado){
+    
+    TreeNode<T> * aux = this->root;
+    
+    while (aux != nullptr) {
+        if (aux->getInfo() == buscado->getInfo() ) {
+            return true;
+        }
+        else {
+            aux = aux->getInfo() > buscado->getInfo() ? aux->getLeft() : aux->getRight();
+        }
+    }
+    
+    return false;
+}
+
+
+//Complejidad logaritmica si el arbol esta balanceado y sino complejidad lineal
+template <class T>
+int BST<T>::whatLevelamI( TreeNode<T> * buscado){
+    bool encontrado = this->search(buscado);
+    
+    if (encontrado == true) {
+        return height(buscado);
+    }else{
+        return -1;
+    }
+    
+}
+
+
 template <class T>
 void BST<T>::visit(int opcion){
     
-    if (opcion < 1 && opcion > 4) {
-        cout << "entrada no valida";
-    }
     
-    else{
         switch (opcion) {
             case 1:
                 
@@ -52,26 +88,54 @@ void BST<T>::visit(int opcion){
                 break;
                 
             case 2:
-                BinaryTree<T>inOrden();
+                BinaryTree<T>::inOrden();
                 break;
                 
             case 3:
-                BinaryTree<T>postOrden();
+                BinaryTree<T>::postOrden();
                 break;
                 
+                //complejidad lineal O(n)
             case 4:
-                BinaryTree<T>printLevelOrder();
+                BinaryTree<T>::levelByLevel();
                 break;
             
             default:
+                cout << " Entrada no valida ";
                 break;
         }
-        
-        
-    }//else
-    
     
 }
+
+//recursivo de complejidad O(n)
+template <class T>
+int BST<T>::height(){
+    return this->height(this->root);
+}
+
+
+//recursivo de complejidad O(n)
+template <class T>
+int BST<T>::height(TreeNode<T>* actual){
+    //si esta vacio sera 0
+    if (actual == NULL)
+        return 0;
+    //en cada ciclo se regresa alturaTotal+1 si se encuentra un arbol en izq o derecha
+    else
+    {
+        /* compute the depth of each subtree */
+        //se guardara altura del subarbol izquierdo
+        int alturaIzq = height(actual->getLeft());
+        //lo mismo apr el derecho
+        int alturaDer = height(actual->getRight() );
+      
+        /* se tiene que usar  la altura máxima de los dos subArboles*/
+        if (alturaIzq > alturaDer )
+            return(alturaIzq + 1);
+        else return(alturaDer + 1);
+    }
+}
+
 
 
 template <class T>
@@ -146,4 +210,24 @@ bool BST<T>::insert(TreeNode<T> * node )
     
     return true;
 }
+
+//complejidad lineal
+template <class T>
+void BST<T>::ancestors(TreeNode<T> * ingresado){
+    
+    if(ingresado == NULL){
+        return;
+    }
+    
+    TreeNode<T> * ancestro = ingresado->getParent();
+    
+    while(ancestro != NULL){
+        //no olvidar poner * para refenciar objetos en direccion
+        cout <<endl << *ancestro <<endl;
+        ancestro = ancestro->getParent();
+    }
+    
+}
+
+
 #endif /* BST_hpp */
