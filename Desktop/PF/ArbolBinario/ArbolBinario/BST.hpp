@@ -7,16 +7,18 @@
 
 #ifndef BST_hpp
 #define BST_hpp
+#include "BinaryTree.hpp"
 
 #include <stdio.h>
 #include <iostream>
-#include "BinaryTree.hpp"
+using namespace std;
 
 template <class T>
 class BST : public BinaryTree<T>
 {
     
 public:
+    //constructor vacio ehredado y también se hereda el apuntador a root
     BST() {};
     virtual ~BST() { };
     
@@ -25,11 +27,47 @@ public:
     bool insert(T &);
     bool insert(TreeNode<T> * );
     
+    void visit(int);
+    
     
 private:
     /* Ocultar algunos métodos heredados */
     //using BinaryTree<T>::insert;
 };
+
+/*Complejidad: */
+template <class T>
+void BST<T>::visit(int opcion){
+    
+    if (opcion < 1 && opcion > 4) {
+        cout << "entrada no valida";
+    }
+    
+    else{
+        switch (opcion) {
+            case 1:
+                preOrden();
+                break;
+                
+            case 2:
+                inOrden();
+                break;
+                
+            case 3:
+                postOrden();
+                break;
+                
+            default:
+                break;
+        }
+        
+        
+    }//else
+    
+    
+}
+
+
 template <class T>
 TreeNode<T> * BST<T>::search(const T & value) const
 {

@@ -16,79 +16,81 @@ using namespace std;
 //una lista enlazada deberia ser generica
 
 template <class T>
-class TreeNode{
+class TreeNode {
 private:
-    //debe tener la info y un apunatdor a otro nodo
     T info;
-    //nullptr es porque no sabes que hay despues pero sabes que habra algo
-    TreeNode<T> * left = nullptr;
     
+    //los atributos de un nodo arbol son left y right y su padre
+    TreeNode<T> * left = nullptr;
     TreeNode<T> * right = nullptr;
     
+    TreeNode<T> * parent = nullptr;
+    
 public:
-    TreeNode(){};
+    /* Constructores */
+    TreeNode() { };
     //constructor por parametro: pasas un objeto por referencia, para que si se hace un cambio, se guarde en el objeto, lo que estas pasando es una direccion en memoria, si se hace un cambio, se queda el cambio en memoria
-    
-    TreeNode( const T & _info): info (_info){};
-    
+
+    TreeNode(const T & _info) : info(_info) {};
     //esta es para crear un nodo a aprtir de otro Node, o sea crear una copia
-    TreeNode( const TreeNode<T> & );
+
+    TreeNode(const TreeNode<T> & );
     
-    //destructor del obejto para no alamcenar mucho en memoria y liberrla al decir delete
+    /* Destructor */
     virtual ~TreeNode();
     
-    T getInfo() const{return info;}
+    /* Getter y Setter */
+    T getInfo() const { return info; }
     //pasar referencias en lugar de copiar apuntador
-    void setInfo(T & value){ info = value;}
+    void setInfo(T & value) { info = value; }
     
-    //esto regresara un apuntador al siguiente nodo tipo T
     
-    TreeNode<T> * getNext() const { return next; }
+    TreeNode<T> * getLeft() const { return left; }
+    void setLeft(TreeNode<T> * value) { left = value; }
     
-    //metodo set recibira un apuntador nomas, o sea el valor que reciba
-    void setNext(TreeNode<T> * value){ next = value;}
+    TreeNode<T> * getRight() const { return right; }
+    void setRight(TreeNode<T> * value) { right = value; }
+    
+    TreeNode<T> * getParent() const { return parent; }
+    void setParent(TreeNode<T> * value) { parent = value; }
+    
     /* Sobrecarga operador == */
     bool operator ==(TreeNode<T> &);
     
-    //es importante saber que aqui debes poner Tn para que no se confunda con T porque es una funcion generica FRIEND
+    /* Sobrecarga operador << */
     template <typename Tn>
-        friend ostream & operator << (ostream & os, const TreeNode<Tn> & node);
-    
+    friend std::ostream & operator << (std::ostream & os, const TreeNode<Tn> & node);
 };
 
-
-
 template <class T>
-//constructor de copia: cuando creas un nodo a partir de otro, por eso con other te referies a que del otro nodo que quieras clonar, le asignas la info y el apuntador del nodo que quieres clonar
-Node<T>::Node(const TreeNode<T> & other){
-    
-    info = other.info;
-    next = other.next;
-    
-}
-
-//destructor
-template <class T>
-Node<T>::~Node(){
-    info.~T();
-    next = nullptr;
-}
-
-template <class T>
-//se sobrecarga de alguna maner el == para hacer una copia
-bool Node<T>::operator ==(Node<T> & other)
+TreeNode<T>::TreeNode(const TreeNode<T> & other)
 {
-    return (info == other.info) && (next == other.next);
+    info = other.info;
+    left = other.left;
+    right = other.right;
 }
 
 template <class T>
-//solo se imprimira el atributo info
-std::ostream & operator << (std::ostream & os, const Node<T> & node)
+TreeNode<T>::~TreeNode()
+{
+    info.~T();
+    left = nullptr;
+    right = nullptr;
+}
+
+template <class T>
+bool TreeNode<T>::operator ==(TreeNode<T> & other)
+{
+    return (info == other.info);
+}
+
+template <class T>
+std::ostream & operator << (std::ostream & os, const TreeNode<T> & node)
 {
     os << node.info;
     
     return os;
 }
 
-#endif /* Node_hpp */
+
 #endif /* TreeNode_hpp */

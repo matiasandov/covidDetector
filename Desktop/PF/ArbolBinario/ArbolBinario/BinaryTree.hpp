@@ -8,10 +8,13 @@
 #ifndef BinaryTree_hpp
 #define BinaryTree_hpp
 
-#include <stdio.h>
+
 #include "TreeNode.hpp"
+
+#include <stdio.h>
 #include <iostream>
 using namespace std;
+
 void clear(TreeNode<T> * );
 
 
@@ -21,6 +24,7 @@ protected:
     TreeNode<T> * root = nullptr;
     
 public:
+    //constructor empieza vacío 
     BinaryTree() {}
     virtual ~BinaryTree();
     
@@ -48,7 +52,6 @@ public:
     void postOrden(TreeNode<T> *) const;
     
 };
-
 template <class T>
 BinaryTree<T>::~BinaryTree()
 {
