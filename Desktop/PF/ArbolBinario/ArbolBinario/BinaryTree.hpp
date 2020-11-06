@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <queue>
+#include <stack>
 using namespace std;
 
 #include "TreeNode.hpp"
@@ -23,8 +24,11 @@ template <class T>
 class BinaryTree {
 protected:
     TreeNode<T> * root = nullptr;
+    stack< TreeNode <T> *> pila;
     
 public:
+    
+    int cont = 0;
     //constructor empieza vacío 
     BinaryTree() {}
     virtual ~BinaryTree();
@@ -50,6 +54,10 @@ public:
     void inOrden() const;
     void inOrden(TreeNode<T> *) const;
     
+    void rellenarInOrdenStack();
+    void rellenarInOrdenStack(TreeNode<T> *) ;
+    void top(int);
+    
     void postOrden() const;
     void postOrden(TreeNode<T> *) const;
     
@@ -57,6 +65,58 @@ public:
     void levelByLevel(TreeNode<T> *) const;
     
 };
+/*
+ template <class T>
+ void BinaryTree<T>::inOrden() const
+ {
+     this->inOrden( this->root );
+ }
+
+ template <class T>
+ void BinaryTree<T>::inOrden(TreeNode<T> * node) const
+ {
+     if (node != nullptr) {
+        
+         inOrden( node->getLeft() );
+         
+        
+         std::cout << *node << " ";
+         
+         
+         inOrden( node->getRight() );
+     }
+ }
+ */
+
+template <class T>
+void BinaryTree<T>::rellenarInOrdenStack(){
+    rellenarInOrdenStack( this->root );
+}
+
+template <class T>
+void BinaryTree<T>::rellenarInOrdenStack(TreeNode<T> * node) {
+    
+    if (node != nullptr) {
+        
+        rellenarInOrdenStack( node->getLeft());
+        
+        pila.push(node);
+        
+        rellenarInOrdenStack( node->getRight());
+    }
+}
+
+template <class T>
+void BinaryTree<T>::top(int nTop){
+    rellenarInOrdenStack();
+    
+    for (int i= 0; i<= nTop; i++) {
+        cout << *pila.top();
+        pila.pop();
+    }
+}
+
+
 template <class T>
 BinaryTree<T>::~BinaryTree()
 {
@@ -136,6 +196,10 @@ void BinaryTree<T>::clear(TreeNode<T> * node)
         clear( node->getRight() );
         delete node;
     }
+    
+    /*for (int i = 0; i<=pila.size(); i++) {
+        pila.pop();
+    }*/
 }
 
 /* Recorridos de un árbol */
