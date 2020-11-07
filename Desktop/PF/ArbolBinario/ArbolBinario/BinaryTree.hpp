@@ -52,7 +52,7 @@ public:
     void inOrden(TreeNode<T> *) const;
     
     void top(int );
-    void top(TreeNode<T> *, int, int ) ;
+    void top(TreeNode<T> *, int &, int &  ) ;
     
     void postOrden() const;
     void postOrden(TreeNode<T> *) const;
@@ -91,17 +91,17 @@ void BinaryTree<T>::top(int nTop){
 }
 
 template <class T>
-void BinaryTree<T>::top(TreeNode<T> * node, int nTop, int contP  ) {
+void BinaryTree<T>::top(TreeNode<T> * node, int & nTop, int & contP  ) {
     
     if ((node != nullptr) && (contP <= nTop) ) {
         
         contP++;
-        top( node->getRight(), nTop, contP );
+        top( node->getRight(), nTop,  contP );
         std::cout << *node << " ";
         cout << " este es el cont "<< contP;
         
         contP++;
-        top( node->getLeft(),nTop, contP );
+        top( node->getLeft(), nTop,  contP );
     }
 }
 
