@@ -3,7 +3,7 @@ import random
 
 try:
   #tengo que poner mi contraseña y host es la noexion de nuestr compu
-  #aqui se guarda la conexion con el sql
+  #aqui se guarda la conexion con tu base de datos de sql
     cnx = mysql.connector.connect(user='root', password='Iyzkw3927', host='127.0.0.1', database='covidDetector', auth_plugin='mysql_native_password')
     cursor = cnx.cursor()
 
