@@ -16,6 +16,10 @@ st.header("Datos generales")
 nombre = st.text_input("Nombre completo del usuario", '-')
 
 edad = st.slider("Edad del usuario",0,130)
+if (edad >= 65 ):
+    edadRiesgoBool = True
+else:
+    edadRiesgoBool  = False
 
 st.markdown('¿Padece **diabetes**?')
 diabetes = st.selectbox('Conteste sí o no', ['Sí', 'No'])
@@ -38,7 +42,13 @@ else:
 st.header("Síntomas")
 #------enfermedades respiratorias-------
 
-#agregamos selector
+st.markdown('¿Padece **dificultad para respiratoria**?')
+dificultadRespiratoria = st.selectbox('Dificultad respiratoria.', ['Sí', 'No'])
+if (dificultadRespiratoria == 'Sí'):
+    dificultadRespiratoriaBool = True
+else:
+    dificultadRespiratoriaBool = False
+
 st.markdown('Enfermedad Respiratoria')
 eRespiratorias = st.selectbox('Seleccione si padece alguna enfermedad respiratoria', ['Ninguna', 'Asma', 'Falta de aliento o dificultad respiratoria (disnea)', 'Congestión o secreción nasal','Resfriado', 'Enfermedad pulmonar', 'Otra'])
 
@@ -52,59 +62,85 @@ eGastro = st.selectbox('Seleccione si padece alguna enfermedad gastrointestinal'
 if eGastro == 'Otra':
     eGastro = st.text_input('Escriba a continuación la enfermedad gastrointestinal', '-')
 
-#-------que si piquen otra les aparezca la opción de hacer un input
-#se creo oringinal_data hasta arriba para filtrar info del tipo de personas afectadas y la calle
-#if select == 'Pedestrians':
-    #si hay mas de 0 injured_pedestrians se monstrara injured_pedestrians y el nombre de la calle, luego con .sort_values se esta indicando que estaran en orden DESCENDIENTE y se dropearan NA y ssolo se mostrara el top 5 con :5
-    #st.write(original_data.query("injured_pedestrians >= 1")[["on_street_name", "injured_pedestrians"]].sort_values( by = ['injured_pedestrians'], ascending=False).dropna(how='any')[:5]  )
-#se repetira lo mismo para las sig dos opciones del selector
+
 
 st.markdown('¿Padece **pérdida de olfato**?')
 olfato = st.selectbox('Pérdida de olfato.', ['Sí', 'No'])
+if (olfato == 'Sí'):
+    olfatoBool = True
+else:
+    olfatoBool = False
 
 st.markdown('¿Padece **hipertensión**?')
 fiebre = st.selectbox('Hipertensión', ['Sí', 'No'])
+if (fiebre == 'Sí'):
+    fiebreBool = True
+else:
+    fiebreBool = False
+    
 
 botonGuardar = st.button('Guardar mis datos')
 
-#mandar todos los datos a SQL
-if botonGuardar:
+#mandar todos los datos a SQL, no se si sea la manera de decir que cuando piquen
+#el boton se mande los datos
+if botonGuardar: 
     try:
   
-  #aqui se guarda la conexion con tu base de datos de sql
-    cnx = mysql.connector.connect(user='root', password='Iyzkw3927', host='127.0.0.1', database='covidDetector', auth_plugin='mysql_native_password')
-    cursor = cnx.cursor()
+    #aqui se guarda la conexion con tu base de datos de sql
+        cnx = mysql.connector.connect(user='root', password='Iyzkw3927', host='127.0.0.1', database='covidDetector', auth_plugin='mysql_native_password')
+        cursor = cnx.cursor()
 
-    #estas indicando la condicion para crear una tupla c
-    query_data = (1,)
+        #¿¿¿¿¿¿¿estas indicando la condicion para crear una tupla c LO NECESITO???? PARA query_dataPersona
+        #solo es importante la coma al final cuando es un sólo elemento 
+        query_data = (1,)
+        
+        
+        
+        
+
+        #¿¿¿¿¿¿¿¿¿¿le dejo la coma al final???????????
+        query_dataPersona = ( nombre, edad)
+        # lastID, nombre, edad
+        #no es necesario poner el idPersona porque se autincrementa al añadir valores a la columna
+        #siempre es %s 
+        queryPersona = (f"insert into persona (nombre, edad) values( %s, %s) ;")
+        
+        cursor.execute(queryPersona, query_dataPersona)
+
+        #obtener el idPersona para ponerlo en historial
+        queryID = (f"select idPersona from persona;")
+        cursor.execute(queryID)
+        #list comprenhension, vas a guardar el ultimo id de luz para de ahí insertar más
+        lastID = [result[0] for result in cursor][-1]
+
+
+        #¿¿¿¿¿¿¿¿¿¿¿¿hacer cambios en historial?????????
+        #ORDEN: idHistorial, idPersona, edadRiesgo, diabetes, hipertension, eRespiratorias
+        #fiebre, perdidaOlfato, dificultadRespiratoria, eGastro
+        #    ¿¿¿¿¿¿¿ LO DE LAST ID  ME SERVIRA PARA AMBOS ID'S y necesito la coma al final???
+        query_dataHistorial = (lastID, lastID, edadRiesgoBool, diabetesBool, hipertensionBool, eRespiratorias, fiebreBool, olfatoBool, dificultadRespiratoriaBool, eGastro )
+        queryHistorial = (f"insert into historial values( %s, %s, %s, %s, %s,%s,%s,%s,%s,%s ) ;")
+
+        cursor.execute(queryHistorial, query_dataHistorial)
+
     
-    #list comprenhension, vas a guardar el ultimo id de luz para de ahí insertar más
-    lastID = [result[0] for result in cursor][-1]
 
-    #aquí debería de poner todos los variables del hsiroial en el orden correspondiente
-    #e ir aumentado el ID con el de arriba
-    query_data = (random.randint(1,10),)
-    query = (f"insert into persona values(%s) ;")
-    
-    cursor.execute(query,query_data)
-    
+        st.write("si se pudo")
+        #para hacer cambios en database 
+        cnx.commit()
 
-
-    #para hacer cambios en database 
-    cnx.commit()
-
-except mysql.connector.Error as err:
-#si hay un error ocurrira esto
-#en caso de que se niegue el acceso a la base de datos
-  if err.errno == mysql.connector.errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
-    #si no existe la base de datos
-  elif err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
-    print(err)
-    
-finally:
-  #esto se hará si o sí 
-  if 'cnx' in locals() or 'cnx' in globals():
-    cnx.close()
+    except mysql.connector.Error as err:
+    #si hay un error ocurrira esto
+    #en caso de que se niegue el acceso a la base de datos
+        if err.errno == mysql.connector.errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+            #si no existe la base de datos
+        elif err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+        
+    finally:
+    #esto se hará si o sí 
+        if 'cnx' in locals() or 'cnx' in globals():
+            cnx.close()
