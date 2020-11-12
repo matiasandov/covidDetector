@@ -17,7 +17,9 @@ void loop() {
   //se guardara tiempo actual para cada toma de la medida
   miliseconds = millis();
   
-  //concatenaremos datos recibidos 
+  //concatenaremos datos recibidos en la string data send
+  //o sea esta guardndo el HR y miliseconds, esto se mandara
+  // a pyhton en el dcoumento conexionArduino.py
   dataToSend += "HR: ";
   dataToSend+=HR;
   dataToSend+=";ML:";

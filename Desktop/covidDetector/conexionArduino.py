@@ -2,12 +2,12 @@ import serial
 
 ser = serial.Serial("/dev/cu.usbmodem14101",9600)
 while(1):
-    lineBytes=ser.readline();
+    lineBytes=ser.readline()
     line=lineBytes.decode("ascii")
     if line[0:2]!="HR":
         continue
     #quitas enter
-    line=line.rstrip();
+    line=line.rstrip()
     #separas los datos de HR y milisegundos
     medidas=line.split(";")
     #aqui esta HR en la foto se explica el rpoceso pero se toma 
