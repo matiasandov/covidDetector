@@ -50,14 +50,14 @@ else:
     dificultadRespiratoriaBool = False
 
 st.markdown('Enfermedad Respiratoria')
-eRespiratorias = st.multiselect('Seleccione si padece alguna enfermedad respiratoria', ['Ninguna', 'Asma', 'Falta de aliento o dificultad respiratoria (disnea)', 'Congestión o secreción nasal','Resfriado', 'Enfermedad pulmonar', 'Otra'])
+eRespiratorias = st.selectbox('Seleccione si padece alguna enfermedad respiratoria', ['Ninguna', 'Asma', 'Falta de aliento o dificultad respiratoria (disnea)', 'Congestión o secreción nasal','Resfriado', 'Enfermedad pulmonar', 'Otra'])
 
 if eRespiratorias == 'Otra':
     eRespiratorias = st.text_input('Escriba a continuación la enfermedad respiratoria ', '-')
 
 #agregamos selector
 st.markdown('Enfermedades Gastrointestinales')
-eGastro = st.multiselect('Seleccione si padece alguna enfermedad gastrointestinal', ['Ninguna', 'Náuseas', 'Vómitos', 'Diarrea', 'Otra'])
+eGastro = st.selectbox('Seleccione si padece alguna enfermedad gastrointestinal', ['Ninguna', 'Náuseas', 'Vómitos', 'Diarrea', 'Otra'])
 
 if eGastro == 'Otra':
     eGastro = st.text_input('Escriba a continuación la enfermedad gastrointestinal', '-')

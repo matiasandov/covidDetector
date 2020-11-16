@@ -1,5 +1,8 @@
 import mysql.connector
 import random
+import numpy as np
+import datetime
+import pandas as pd
 
 try:
   #tengo que poner mi contraseña y host es la noexion de nuestr compu
@@ -8,7 +11,7 @@ try:
     cursor = cnx.cursor()
 
     #estas indicando la condicion para crear una tupla c
-    query_data = (1,)
+    #query_data = (1,)
     #va a tomar una table de data base con %s estas llamando a query data
     # %s es una referencia generica que lo invocas abajo en .execute
    # query = (f"SELECT idPersona FROM persona  ;")
@@ -22,12 +25,30 @@ try:
   #list comprenhension, vas a guardar el ultimo id de luz para de ahí insertar más
     #lastID = [result[0] for result in cursor][-1]
 
-    lista = [random.randint(1, 10) for persona in range(10)]
+    oxigeno = random.randint(95,100)
+    ritmo = random.randint(60,100)
+
+    fecha = [datetime.datetime(2020,11,11) + datetime.timedelta(days = x) for x in range(0,365) ]
+    hora = datetime.time()
+    print(hora)
+
+    #obtener el idPersona para ponerlo en historial
+    queryID = (f"select idPersona from persona;")
+    cursor.execute(queryID)
+
+    #list comprenhension, vas a guardar el ultimo id de luz para de ahí insertar más
+    idsPersona = [result[0] for result in cursor]
+
+    idControlOXi = 0
+
+
+
+    #(idPerson, oxigeno, fecha, hora, idControlOximetro)
+    for idControlOXi in range(1, np.count_nonzero(idsPersona) ):
+      query_Oxigeno = (idsPersona, oxigeno, fecha, hora, idControlOXi)
+      queryDataOXi = (f"insert into controlOximetro  values( %s, %s, %s, %s, %s) ;")
     
-    query_data = (random.randint(1,10),)
-    query = (f"insert into persona (idPersona) values(%s) ;")
-    
-    cursor.execute(query,query_data)
+      cursor.execute(queryDataOXi,query_Oxigeno)
     
 
 
