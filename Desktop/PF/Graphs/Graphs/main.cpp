@@ -10,8 +10,8 @@
 #include <algorithm>
 #include <iterator>
 #include "Graph.hpp"
-#include <list>
-using namespace std;
+#include <queue>
+
 
 
 //complejidad O(v+e) // MULTILSTA clase grafos
@@ -19,30 +19,23 @@ void loadGraph2(int nV, int nE, Graph<int, int> *  graph)
 {
     //precondición
     if (nV > 0 && nE > 0 ) {
-        //para añadirle al de a ultima posicion todos las aristas restantes después del for
-        
-       //contar vertex llenados y guardar el valor del ultimo, que realmente será igual a nV
-        int contVertex = 0;
+       
         //llenar de vertex
         for (int i = 0; i <= nV ; i++) {
             
             //añadir vertex con valor de i
             graph->addVertex(i);
-            
-            Edge<int, int>  * arista = new Edge<int, int>(0,graph->nodes[i+1]);
-            
-            graph->nodes[i]->addEdge(arista);
-            contVertex++;
            
         }
         
-        //añadir aristas restantes al ultimo vertex de la lista
-        if (nV < nE ) {
-            for (contVertex; contVertex <= nE; contVertex++) {
-                Edge<int, int> *arista = new Edge<int, int>(0,graph->nodes[nV]);
-                graph->nodes[nV]->addEdge(arista);
-            }
+        //añadir aristas de manera random
+        for (int i = 0; i < nE ; i++) {
+            int v1 = rand() % nV +1;
+            int v2 = rand() % nV +1;
+            int peso = rand() % 10 +1;
+            graph->addEdge(graph->nodes[v1], graph->nodes[v2], peso);
         }
+
         
         
     }
@@ -120,46 +113,33 @@ void DFS(std::vector < std::vector<int> > & graph, int nodoInicial)
                 }
             }
         }
-        
-            
 }
+
 //complejidad O(v+e)
 void BFS(Graph<int, int> * graph, int nodoInicial)
 {
-    list< Vertex<int, int> > nodos;
-    int tam = graph->nodes.size();
+    //crear vector
+    queue<Vertex<int, int> *> cola;
     
-    //lista para checar los que ya son visitados
-    bool *visited = new bool[tam];
-        for(int i = 0; i < tam; i++)
-            visited[i] = false;
-    
-    //nodo buscado
     graph->nodes[nodoInicial]->visitado = true;
-    nodos.push_back(nodoInicial);
     
-    // 'i' will be used to get all adjacent
-        // vertices of a vertex
-    list<int>::iterator i;
+    cola.push(graph->nodes[nodoInicial]);
     
-    while(!nodos.empty())
-       {
-           // Dequeue a vertex from queue and print it
-           Vertex<int, int> nodoAct = nodos.front();
-           cout << nodoAct << " ";
-           nodos.pop_front();
-           
-           /*for (i = graph->nodes[nodoInicial]; i != graph->nodes[tam]; ++i)
-                   {
-                       if (!visited[*i])
-                       {
-                           visited[*i] = true;
-                           queue.push_back(*i);
-                       }
-                   }*/
-           
-       }
+    cout << "Inicial : " << *graph->nodes[nodoInicial];
     
+    while (cola.size() != 0) {
+        Vertex<int, int> * actual = cola.front();
+        //aquí tendría que borrar??
+        cola.pop();
+        for (int i = 0; i < actual->edges.size(); i++) {
+            if (actual->edges[i]->getTarget()->visitado == false) {
+                Vertex<int, int> * incidente = actual->edges[i]->getTarget();
+                incidente->visitado = true;
+                cola.push(incidente);
+                cout << *incidente;
+            }
+        }
+    }
 }
 
 int main(int argc, const char * argv[]) {
@@ -185,10 +165,13 @@ int main(int argc, const char * argv[]) {
     /* Generar el grafo como multilista */
     loadGraph2(vertices, aristas, multilista);
     
-    cout << multilista;
+    cout << *multilista;
+    
+    cout << "\n ------ Multilista con BFS ------" << std::endl;
+    BFS(multilista, 1);
     
     /* Recorrido con BFS
-    std::cout << "------ Multilista con BFS ------" << std::endl;
+    std::
     int nodo_u = 1;
     BFS(multilista, u);*/
     

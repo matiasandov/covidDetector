@@ -17,9 +17,10 @@ template <class V, class E>
 class Vertex {
     
     V info;
-    std::vector< Edge<V, E> * > edges;
+    
     
 public:
+    std::vector< Edge<V, E> * > edges;
     bool visitado = false;
     Vertex() {}
     Vertex(V _info) : info(_info) {}

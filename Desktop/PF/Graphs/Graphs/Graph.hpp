@@ -17,8 +17,6 @@ using namespace std;
 template <class V, class E>
 class Graph {
     
-    
-    
 public:
     
     std::vector < Vertex<V, E> * > nodes;
@@ -110,4 +108,4 @@ std::ostream & operator <<(std::ostream & os, const Graph<V,E> & graph)
 
 
 #endif /* Graph_hpp */
-*
+
