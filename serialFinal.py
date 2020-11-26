@@ -62,7 +62,7 @@ while(1):
         #irValues.append(ir)
     except:
         #continue
-        if(len(hrValues)==100):
+        if(len(hrValues)==1000):
                 #print(hrValues)
                 
                 #quita primeros 25 
@@ -70,12 +70,12 @@ while(1):
                 miliValues=miliValues[25:]
                 
                 #creo que si lo estoy pasando de 25 en 25 no necesito sample size o no sé
-                HrResultado,tiempoR = smooth_curve_average(hrValues,miliValues,25)
+                HrResultado,tiempoR = smooth_curve_average(hrValues,miliValues,100)
 
                 HrPromedio = np.average(HrResultado)
                 tiempoPromedio = np.average(tiempoR)
 
-                plt.plot(HrResultado,tiempoR)
+                plt.plot(tiempoR,HrResultado)
                 plt.show()
 
                 pulsoFinal = HrPromedio/tiempoPromedio
