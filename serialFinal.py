@@ -94,10 +94,10 @@ while(1):
                     for j in range(0,100):
                         fecha = datetime.datetime(2020,11,26) 
                         hora = datetime.time()
-                        query_Oxigeno = (x, j, fecha, hora, HrResultado)
-                        queryDataOXi = (f"insert into controlPulso values( %s, %s, %s, %s) ;")
+                        queryPulso = (x, j, fecha, hora, HrResultado)
+                        queryDataPulso = (f"insert into controlPulso values( %s, %s, %s, %s, %s) ;")
                         
-                        cursor.execute(queryDataOXi,query_Oxigeno)
+                        cursor.execute(queryDataPulso,queryPulso)
 
                         #para hacer cambios en database 
                         cnx.commit()
