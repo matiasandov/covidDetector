@@ -75,6 +75,9 @@ while(1):
                 HrPromedio = np.average(HrResultado)
                 tiempoPromedio = np.average(tiempoR)
 
+                plt.plot(HrResultado,tiempoR)
+                plt.show()
+
                 pulsoFinal = HrPromedio/tiempoPromedio
                 print(HrPromedio)
                 #redValues=redValues[25:]
