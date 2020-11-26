@@ -4,6 +4,7 @@ import pandas as pd
 import statistics as ss
 
 #sample size = tamaño de la ventana o del periodo sobre el cual sera el promedio 
+#cambiarle para que reciba miliseconds
 def smooth_curve_average(points, sample_size):
 
     smoothed_points = []
