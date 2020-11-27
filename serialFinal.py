@@ -35,6 +35,35 @@ def smooth_curve_average(points,miliseconds, sample_size):
 
     return smoothed_points, smoothed_time
 
+def sensorValue(min = 200000, max = 233000, range = 500, with_finger = False):
+    return random.randint(max, max+range) if with_finger else random.randint(min, min+range)
+
+def smooth_curve_simple(points, sample_size):
+    # smoothed_points = [sum(points[i:i+sample_size])/sample_size for i in range(0, len(points), sample_size)]
+    # print(len(smoothed_points))
+    # return smoothed_points
+    smoothed_points = []
+    reads = [0 for _ in range(sample_size)]
+    id_reads = 0
+    for id, point in enumerate(points):
+        reads[id_reads] = point
+        id_reads += 1
+
+        if id_reads % sample_size == 0:
+            id_reads = 0
+            smoothed_points.append((sum(reads)/sample_size, id))
+
+    return smoothed_points
+
+def analisisHR(hrValues, miliValues, sample_size):
+    smoothed_values =[ data for data,i in smooth_curve_simple(hrValues, sample_size)]
+    peaks = find_peaks(smoothed_values)[0]
+
+    valorHR=(60000*len(peaks))/(miliValues[-1]-miliValues[0])
+
+    return valorHR
+
+
 
 
 
@@ -61,27 +90,21 @@ while(1):
         #redValues.append(red)
         #irValues.append(ir)
     except:
-        #continue
+        continue
         if(len(hrValues)==1000):
-                #print(hrValues)
-                
-                #quita primeros 25 
                 hrValues=hrValues[25:]
                 miliValues=miliValues[25:]
                 
                 #creo que si lo estoy pasando de 25 en 25 no necesito sample size o no sé
-                HrResultado,tiempoR = smooth_curve_average(hrValues,miliValues,100)
+                HrResultado,tiempoR = smooth_curve_average(hrValues,miliValues,25)
+                HrResultado_1 = analisisHR(hrValues, miliValues, 5)
 
                 HrPromedio = np.average(HrResultado)
                 tiempoPromedio = np.average(tiempoR)
 
-                plt.plot(tiempoR,HrResultado)
-                plt.show()
 
-                pulsoFinal = HrPromedio/tiempoPromedio
+                pulsoFinal = HrPromedio/1000
                 print(HrPromedio)
-                #redValues=redValues[25:]
-                #irValues=irValues[25:]
 
                 try:
     
@@ -93,7 +116,7 @@ while(1):
                     idPulsooo = 1
                     fecha = datetime.datetime(2020,11,26) 
                     hora = datetime.time()
-                    queryPulso = (persona, idPulsooo, fecha, hora, pulsoFinal)
+                    queryPulso = (persona, idPulsooo, fecha, hora, HrResultado_1)
                     queryDataPulso = (f"insert into controlPulso (idPersona, idControlPulso,fecha, hora, pulso) values( %s, %s, %s, %s, %s) ;")
                             
                     cursor.execute(queryDataPulso,queryPulso)
