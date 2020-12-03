@@ -93,6 +93,7 @@ while(1):
         #continue
         if(len(hrValues)==1000):
             hrValues=hrValues[25:]
+            
             miliValues=miliValues[25:]
                 
             #creo que si lo estoy pasando de 25 en 25 no necesito sample size o no sé
