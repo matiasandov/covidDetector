@@ -90,52 +90,52 @@ while(1):
         #redValues.append(red)
         #irValues.append(ir)
     except:
-        continue
+        #continue
         if(len(hrValues)==1000):
-                hrValues=hrValues[25:]
-                miliValues=miliValues[25:]
+            hrValues=hrValues[25:]
+            miliValues=miliValues[25:]
                 
-                #creo que si lo estoy pasando de 25 en 25 no necesito sample size o no sé
-                HrResultado,tiempoR = smooth_curve_average(hrValues,miliValues,25)
-                HrResultado_1 = analisisHR(hrValues, miliValues, 5)
+            #creo que si lo estoy pasando de 25 en 25 no necesito sample size o no sé
+            HrResultado,tiempoR = smooth_curve_average(hrValues,miliValues,25)
+            HrResultado_1 = analisisHR(hrValues, miliValues, 5)
 
-                HrPromedio = np.average(HrResultado)
-                tiempoPromedio = np.average(tiempoR)
+            HrPromedio = np.average(HrResultado)
+            tiempoPromedio = np.average(tiempoR)
 
 
-                pulsoFinal = HrPromedio/1000
-                print(HrPromedio)
+            pulsoFinal = HrPromedio/1000
+            print(HrPromedio)
 
-                try:
+            try:
     
-                    cnx = mysql.connector.connect(user='root', password='Iyzkw3927', host='127.0.0.1', database='covidDetector', auth_plugin='mysql_native_password')
-                    cursor = cnx.cursor()
+                cnx = mysql.connector.connect(user='root', password='Iyzkw3927', host='127.0.0.1', database='covidDetector', auth_plugin='mysql_native_password')
+                cursor = cnx.cursor()
 
-                    #(idPerson, oxigeno, fecha, hora, idControlOximetro)
-                    persona = 1
-                    idPulsooo = 1
-                    fecha = datetime.datetime(2020,11,26) 
-                    hora = datetime.time()
-                    queryPulso = (persona, idPulsooo, fecha, hora, HrResultado_1)
-                    queryDataPulso = (f"insert into controlPulso (idPersona, idControlPulso,fecha, hora, pulso) values( %s, %s, %s, %s, %s) ;")
+                #(idPerson, oxigeno, fecha, hora, idControlOximetro)
+                persona = 1
+                idPulsooo = 1
+                fecha = datetime.datetime(2020,11,26) 
+                hora = datetime.time()
+                queryPulso = (persona, idPulsooo, fecha, hora, HrResultado_1)
+                queryDataPulso = (f"insert into controlPulso (idPersona, idControlPulso,fecha, hora, pulso) values( %s, %s, %s, %s, %s) ;")
                             
-                    cursor.execute(queryDataPulso,queryPulso)
+                cursor.execute(queryDataPulso,queryPulso)
 
                             #para hacer cambios en database 
-                    cnx.commit()
+                cnx.commit()
 
-                except mysql.connector.Error as err:
+            except mysql.connector.Error as err:
                 #si hay un error ocurrira esto
                 #en caso de que se niegue el acceso a la base de datos
-                    if err.errno == mysql.connector.errorcode.ER_ACCESS_DENIED_ERROR:
-                        print("Something is wrong with your user name or password")
+                if err.errno == mysql.connector.errorcode.ER_ACCESS_DENIED_ERROR:
+                    print("Something is wrong with your user name or password")
                         #si no existe la base de datos
-                    elif err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
-                        print("Database does not exist")
-                    else:
-                        print(err)
+                elif err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
+                    print("Database does not exist")
+                else:
+                    print(err)
                     
-                finally:
+            finally:
                 #esto se hará si o sí 
-                    if 'cnx' in locals() or 'cnx' in globals():
-                        cnx.close()
+                if 'cnx' in locals() or 'cnx' in globals():
+                    cnx.close()
